@@ -10,7 +10,7 @@ class Book extends Component {
         <h2 className="book-title">{this.props.book.volumeInfo.title}</h2>
         <Author authors={this.props.book.volumeInfo.authors} />
         {this.props.book.saleInfo.saleability !== 'NOT_FOR_SALE' ? <p className="book-price">Price: {this.props.book.saleInfo.listPrice.amount}</p> : <p>Not For Sale</p>}
-        <p className="book-desc">{this.props.book.searchInfo.textSnippet}</p>
+        {this.props.book.searchInfo !== undefined ? <p className="book-desc"> Description: {this.props.book.searchInfo.textSnippet} </p> : <p>There is no text snippet available for this book. </p>}
       </div>
     );
   }

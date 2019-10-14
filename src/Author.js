@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 
 class Author extends Component {
   render() {
-    const authors = this.props.authors.join(', ');
+    let authors; 
+      if (this.props.authors !== undefined) { 
+        authors = this.props.authors.join(', '); 
+      } else { 
+        authors = "None Listed" 
+      };
+
     return (
       <p className="book">
         Author(s): {authors}
