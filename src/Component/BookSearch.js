@@ -6,7 +6,7 @@ class BookSearch extends React.Component {
         return (
             <form className='bookSearch'>
                 <label htmlFor='searchBook'>Search: </label>
-                <input id='searchBook' placeholder='Book Title' name='searchBook' type='text' />
+                <input id='searchBook' placeholder='Book Title' ref='searchBook' name='searchBook' type='text' onChange={this.props.handleSearch}/>
                 <button type='submit'>Submit</button>
             </form>
         )
