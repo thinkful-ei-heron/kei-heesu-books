@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import BookList from './BookList';
+import BookSearch from '../Component/BookSearch';
+
+const USCurrencyFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +59,9 @@ class App extends Component {
     console.log(this.state.books);
     return (
       <div>
+        <Header />
+        <BookSearch />
+        <BookFilter />
         {this.state.books.length > 0 && <BookList books={this.state.books} />}
       </div>
     )
