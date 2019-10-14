@@ -20,7 +20,7 @@ class App extends Component {
       bookType: '',
       printType: 'all',
       error: null,
-      search: null
+      search: ''
     }
   }
 
@@ -28,7 +28,8 @@ class App extends Component {
     this.setState(
         {
             bookType
-        }
+        },
+        this.update
     );
   }
 
@@ -36,7 +37,8 @@ class App extends Component {
     this.setState(
         {
             printType
-        }
+        },
+        this.update
     );
   }
 
@@ -65,13 +67,13 @@ class App extends Component {
   update = () => {
     let url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.search}`;
     if(this.state.printType.length > 0) {
-      url+='&' + (this.state.bookType);
+      url= url + '&printType=' + this.state.printType;
+      console.log('inside if statement for printType ' + url + ', ' + this.state.printType)
     } 
     if(this.state.bookType.length > 0) {
-      url+='&' + (this.state.bookType);
+      url= url + '&filter=' + this.state.bookType;
+      console.log('inside if statement for bookType ' + url + ', ' + this.state.bookType)
     }
-    //const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.search}&filter=${this.state.bookType}&printType=${this.state.printType}`;
-    console.log(url);
     
     const options = {
       method: 'GET',
@@ -81,6 +83,8 @@ class App extends Component {
     };
     fetch(url, options)
       .then(response => {
+        console.log('fetch')
+        console.log(url)
         if(!response.ok) {
           throw new Error('bad');
         }
@@ -88,10 +92,17 @@ class App extends Component {
       })
       .then (response => response.json())
       .then(data => {
-        this.setState({
-          books: data.items,
-          expandedView: false,
-        });
+        console.log('updating state of books array')
+        if (data.totalItems > 0) {
+          this.setState({
+            books: data.items,
+            expandedView: false,
+          });
+        } else {
+          this.setState({
+            books: []
+          })
+        }
       })
       .catch(error => {
         this.setState({
@@ -103,10 +114,11 @@ class App extends Component {
   render() {
     return (
       <div>
+        {console.log('running render()')}
         <Header />
         <BookSearch state={this.state} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/>
-        <BookFilter state={this.state} handleBookType={this.handleBookType} handlePrintType={this.handlePrintType}/>
-        {this.state.books.length > 0 && <BookList books={this.state.books} />}
+        <BookFilter state={this.state} handleBookType={this.handleBookType} handlePrintType={this.handlePrintType} />
+        {this.state.books.length > 0 ? <BookList books={this.state.books} /> : <p>There are no results.</p>}
       </div>
     )
   } 
