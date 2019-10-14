@@ -16,10 +16,12 @@ class BookFilter extends React.Component {
 
                 <label htmlFor='bookType'>Book Type: </label>
                 <select id='bookType' name='bookType' onChange={e=>this.props.handleBookType(e.target.value)}>
-                    <option value='noFilter'>No Filter</option>
+                    <option value=''>No Filter</option>
                     <option value='ebooks'>eBooks</option>
-                    <option value='freeBooks'>Free Books</option>
-                    <option value='paidEbooks'>Paid eBooks</option>
+                    <option value='free-ebooks'>Free eBooks</option>
+                    <option value='paid-ebooks'>Paid eBooks</option>
+                    <option value='full'>Full</option>
+                    <option value='partial'>Partial</option>
                 </select>
             </div>
         )

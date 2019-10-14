@@ -17,8 +17,8 @@ class App extends Component {
     this.state = {
       books: [],
       expandedView: false,
-      bookType: null,
-      printType: null,
+      bookType: '',
+      printType: 'all',
       error: null,
       search: null
     }
@@ -63,8 +63,16 @@ class App extends Component {
   }
 
   update = () => {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.search}`;
-    console.log(url)
+    let url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.search}`;
+    if(this.state.printType.length > 0) {
+      url+='&' + (this.state.bookType);
+    } 
+    if(this.state.bookType.length > 0) {
+      url+='&' + (this.state.bookType);
+    }
+    //const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.search}&filter=${this.state.bookType}&printType=${this.state.printType}`;
+    console.log(url);
+    
     const options = {
       method: 'GET',
       headers: {
