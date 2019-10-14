@@ -16,7 +16,6 @@ class App extends Component {
     super(props);
     this.state = {
       books: [],
-      expandedView: false,
       bookType: '',
       printType: 'all',
       error: null,
@@ -52,27 +51,17 @@ class App extends Component {
   }
 
   handleSubmit = (e) => {
-    console.log('handlesubmit')
     e.preventDefault();
     this.update();
-  }
-
-  //update expandedView 
-  setExpandedView(expanded) {
-    this.setState({
-      expandedView: expanded
-    })
   }
 
   update = () => {
     let url=`https://www.googleapis.com/books/v1/volumes?q=${this.state.search}`;
     if(this.state.printType.length > 0) {
       url= url + '&printType=' + this.state.printType;
-      console.log('inside if statement for printType ' + url + ', ' + this.state.printType)
     } 
     if(this.state.bookType.length > 0) {
       url= url + '&filter=' + this.state.bookType;
-      console.log('inside if statement for bookType ' + url + ', ' + this.state.bookType)
     }
     
     const options = {
@@ -83,8 +72,6 @@ class App extends Component {
     };
     fetch(url, options)
       .then(response => {
-        console.log('fetch')
-        console.log(url)
         if(!response.ok) {
           throw new Error('bad');
         }
@@ -92,7 +79,6 @@ class App extends Component {
       })
       .then (response => response.json())
       .then(data => {
-        console.log('updating state of books array')
         if (data.totalItems > 0) {
           this.setState({
             books: data.items,
@@ -114,7 +100,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        {console.log('running render()')}
         <Header />
         <BookSearch state={this.state} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/>
         <BookFilter state={this.state} handleBookType={this.handleBookType} handlePrintType={this.handlePrintType} />
