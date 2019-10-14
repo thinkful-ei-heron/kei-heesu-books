@@ -9,6 +9,7 @@ class BookList extends React.Component {
                 <ul>
                     <li className='bookTitle'>Title</li>
                     <li>Author</li>
+                    <li>Price</li>
                     <li>Describtion</li>
                 </ul>
             </div>
