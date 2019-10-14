@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import BookList from './BookList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+      expandedView: false,
+      filter: null,
+      error: null
+    }
+  }
+
+  componentDidMount() {
+    const url = 'https://www.googleapis.com/books/v1/volumes?q=mistborn';
+    const options = {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    fetch(url, options)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('bad');
+        }
+        return response;
+      })
+      .then (response => response.json())
+      .then(data => {
+        this.setState({
+          books: data.items,
+          expandedView: false,
+        });
+      })
+      .catch(error => {
+        this.setState({
+          error: error.message
+        });
+      });
+  }
+
+  //update expandedView 
+  setExpandedView(expanded) {
+    this.setState({
+      expandedView: expanded
+    })
+  }
+
+  render() {
+    console.log(this.state.books);
+    return (
+      <div>
+        {this.state.books.length > 0 && <BookList books={this.state.books} />}
+      </div>
+    )
+  } 
 }
 
 export default App;
