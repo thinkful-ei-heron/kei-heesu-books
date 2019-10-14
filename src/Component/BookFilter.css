@@ -1,0 +1,12 @@
+.filterOption {
+    display: flex;
+    justify-content: center;
+    background-color: lightgray;
+    padding: 10px 10px;
+};
+
+.filterOption label {
+    margin-left: 5px;
+    margin-right: 5px;
+};
+

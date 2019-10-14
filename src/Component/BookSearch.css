@@ -1,0 +1,10 @@
+.bookSearch {
+    justify-content: center;
+    display: flex;
+    background-color: gray;
+    padding: 10px 10px;
+}
+
+.bookSearch button {
+    margin-left: 5px;
+}
