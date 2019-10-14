@@ -3,6 +3,7 @@ import Author from './Author';
 
 class Book extends Component {
   render() {
+    console.log(this.props.book);
     return (
       <div className="book" onClick={e => this.props.setExpandedView}>
         <img className="book-thumbnail" src={this.props.book.volumeInfo.imageLinks.thumbnail} alt="cover"/>

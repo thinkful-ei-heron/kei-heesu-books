@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import BookList from './Component/BookList';
+import BookList from './BookList';
 import BookSearch from './Component/BookSearch';
 import Header from './Component/Header';
 import BookFilter from './Component/BookFilter'
@@ -42,12 +42,17 @@ class App extends Component {
 
   handleSearch = (e) => {
     e.preventDefault();
-    console.log(e);
     this.setState(
       {
         search: e.target.value
       }
     )
+  }
+
+  handleSubmit = (e) => {
+    console.log('handlesubmit')
+    e.preventDefault();
+    this.update();
   }
 
   componentDidMount() {
@@ -120,7 +125,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <BookSearch state={this.state} handleSearch={this.handleSearch}/>
+        <BookSearch state={this.state} handleSearch={this.handleSearch} handleSubmit={this.handleSubmit}/>
         <BookFilter state={this.state} handleBookType={this.handleBookType} handlePrintType={this.handlePrintType}/>
         {this.state.books.length > 0 && <BookList books={this.state.books} />}
       </div>
